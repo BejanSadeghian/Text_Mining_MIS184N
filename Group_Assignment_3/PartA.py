@@ -137,50 +137,50 @@ weighted_PR = nx.pagerank(FG, alpha = 0.5, weight = 'weight')
 
 
 
-PR_ES = 1
-PR_LS = 1
-PR_RX =1
-PR_A8 =1
-PR_A6 = 1
-PR_3series = 1
-PR_5series = 1
-PR_7series = 1
-PR_XJ = 1
-PR_Sclass = 1
-
-#Count the number of 
-ref = {}
-for n in names:
-    count = int(0)
-    count = [(count + 1) for (y, x) in node_list if x == n]
-    ref[n] = sum(count)
-RF_ES = float(1)/ref['ES']
-RF_LS = float(1)/ref['LS']
-RF_RX =float(1)/ref['RX']
-RF_A8 =float(1)/ref['A8']
-RF_A6 = float(1)/ref['A6']
-RF_3series = float(1)/ref['3series']
-RF_5series = float(1)/ref['5series']
-RF_7series = float(1)/ref['7series']
-RF_XJ = float(1)/ref['XJ']
-RF_Sclass = float(1)/ref['Sclass']
-
-
-
-PR_ES = 0.5 + 0.5*((PR_LS/RF_LS) + (PR_RX/RF_RX) + (PR_A8/RF_A8)
-
-
-
-
-
-
-ES = RF_ES
-LS = RF_LS
-RX = RF_RX
-A8 = RF_A8
-A6 = RF_A6
-3series = RF_3series
-5series = RF_5series
-7series = RF_7series
-XJ = RF_XJ
-Sclass = RF_Sclass
+#PR_ES = 1
+#PR_LS = 1
+#PR_RX =1
+#PR_A8 =1
+#PR_A6 = 1
+#PR_3series = 1
+#PR_5series = 1
+#PR_7series = 1
+#PR_XJ = 1
+#PR_Sclass = 1
+#
+##Count the number of 
+#ref = {}
+#for n in names:
+#    count = int(0)
+#    count = [(count + 1) for (y, x) in node_list if x == n]
+#    ref[n] = sum(count)
+#RF_ES = float(1)/ref['ES']
+#RF_LS = float(1)/ref['LS']
+#RF_RX =float(1)/ref['RX']
+#RF_A8 =float(1)/ref['A8']
+#RF_A6 = float(1)/ref['A6']
+#RF_3series = float(1)/ref['3series']
+#RF_5series = float(1)/ref['5series']
+#RF_7series = float(1)/ref['7series']
+#RF_XJ = float(1)/ref['XJ']
+#RF_Sclass = float(1)/ref['Sclass']
+#
+#
+#
+#PR_ES = 0.5 + 0.5*((PR_LS/RF_LS) + (PR_RX/RF_RX) + (PR_A8/RF_A8)
+#
+#
+#
+#
+#
+#
+#ES = RF_ES
+#LS = RF_LS
+#RX = RF_RX
+#A8 = RF_A8
+#A6 = RF_A6
+#3series = RF_3series
+#5series = RF_5series
+#7series = RF_7series
+#XJ = RF_XJ
+#Sclass = RF_Sclass
