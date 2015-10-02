@@ -15,11 +15,13 @@ rawsentiment = pd.read_csv(r'C:\Users\beins_000\Documents\GitHub\Text_Mining_MIS
 
 
 #----------For Part C--------
-rawsentiment1 = pd.read_csv(r'C:\Users\beins_000\Documents\GitHub\Text_Mining_MIS184N\Group_Assignment_3\output.csv')
+
+rawsentiment1 = pd.read_csv(r'C:\Users\beins_000\Documents\GitHub\Text_Mining_MIS184N\Group_Assignment_3\outputv2.csv')
 rawsentiment = rawsentiment1.drop(['Unnamed: 0','model_strings'], axis=1)
 lab_for_C = ['ES', 'LS', 'RX', 'A8', 'A6', '3series', '5series', '7series', 'XJ', 'Sclass']
 rawsentiment.columns = lab_for_C
 rawsentiment = rawsentiment * 5
+
 #----------End Part C--------
 
 #names = ['ES-LS','ES-RX','ES-A8','ES-A6','ES-3series','ES-5series','ES-7series','ES-XJ','ES-Sclass','LS-RX','LS-A8','LS-A6','LS-3series','LS-5series','LS-7series','LS-XJ','LS-Sclass','RX-A8','RX-A6','RX-3series','RX-5series','RX-7series','RX-XJ','RX-Sclass','A8-A6','A8-3series','A8-5series','A8-7series','A8-XJ','A8-Sclass','A6-3series','A6-5series','A6-7series','A6-XJ','A6-Sclass','3series-5series','3series-7series','3series-XJ','3series-Sclass','5series-7series','5series-XJ','5series-Sclass','7series-XJ','7series-Sclass','XJ-Sclass']
