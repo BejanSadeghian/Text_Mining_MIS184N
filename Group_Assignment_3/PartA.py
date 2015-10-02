@@ -16,11 +16,12 @@ rawsentiment = pd.read_csv(r'C:\Users\beins_000\Documents\GitHub\Text_Mining_MIS
 
 #----------For Part C--------
 
-rawsentiment1 = pd.read_csv(r'C:\Users\beins_000\Documents\GitHub\Text_Mining_MIS184N\Group_Assignment_3\outputv2.csv')
+rawsentiment1 = pd.read_csv(r'C:\Users\beins_000\Documents\GitHub\Text_Mining_MIS184N\Group_Assignment_3\outputv3.csv')
 rawsentiment = rawsentiment1.drop(['Unnamed: 0','model_strings'], axis=1)
 lab_for_C = ['ES', 'LS', 'RX', 'A8', 'A6', '3series', '5series', '7series', 'XJ', 'Sclass']
 rawsentiment.columns = lab_for_C
 rawsentiment = rawsentiment * 5
+rawsentiment.replace(to_replace=0,value=0.0001, inplace=True)
 
 #----------End Part C--------
 
@@ -108,7 +109,7 @@ fig1.savefig('network.png', dpi=1000)
 ##Part B
 
 #Unweighted Page Rank
-unweighted_PR = nx.pagerank(G, alpha = 0.5)
+unweighted_PR = nx.pagerank(G, alpha = 0.5, max_iter=100)
 
 #Weighted Page Rank
 ##Creating the network graph
@@ -135,7 +136,7 @@ for index, pref in enumerate(averages_df.loc[:,'Negative']): #Negatives
 FG.add_weighted_edges_from(node_list)
 
 
-weighted_PR = nx.pagerank(FG, alpha = 0.5, weight = 'weight')
+weighted_PR = nx.pagerank(FG, alpha = 0.5, weight = 'weight', max_iter=100000, tol=1e-01)
 
 
 #Placing the PageRank in a series for combination and Correlation Calculation
