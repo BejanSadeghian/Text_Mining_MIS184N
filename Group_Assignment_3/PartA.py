@@ -16,8 +16,9 @@ rawsentiment = pd.read_csv(r'C:\Users\beins_000\Documents\GitHub\Text_Mining_MIS
 
 #----------For Part C--------
 
-rawsentiment1 = pd.read_csv(r'C:\Users\beins_000\Documents\GitHub\Text_Mining_MIS184N\Group_Assignment_3\outputv3.csv')
-rawsentiment = rawsentiment1.drop(['Unnamed: 0','model_strings'], axis=1)
+rawsentiment1 = pd.read_csv(r'C:\Users\beins_000\Documents\GitHub\Text_Mining_MIS184N\Group_Assignment_3\take2senti.csv')
+#rawsentiment = rawsentiment1.drop(['Unnamed: 0','model_strings'], axis=1)
+rawsentiment = rawsentiment1.drop('Unnamed: 0', axis=1) #Testing bejans
 lab_for_C = ['ES', 'LS', 'RX', 'A8', 'A6', '3series', '5series', '7series', 'XJ', 'Sclass']
 rawsentiment.columns = lab_for_C
 rawsentiment = rawsentiment * 5
@@ -136,7 +137,7 @@ for index, pref in enumerate(averages_df.loc[:,'Negative']): #Negatives
 FG.add_weighted_edges_from(node_list)
 
 
-weighted_PR = nx.pagerank(FG, alpha = 0.5, weight = 'weight', max_iter=100000, tol=1e-01)
+weighted_PR = nx.pagerank(FG, alpha = 0.5, weight = 'weight')#, max_iter=100000, tol=1e-01)
 
 
 #Placing the PageRank in a series for combination and Correlation Calculation
