@@ -18,11 +18,14 @@ rawsentiment = pd.read_csv(r'C:\Users\beins_000\Documents\GitHub\Text_Mining_MIS
 
 rawsentiment1 = pd.read_csv(r'C:\Users\beins_000\Documents\GitHub\Text_Mining_MIS184N\Group_Assignment_3\outputv3.csv')
 rawsentiment = rawsentiment1.drop(['Unnamed: 0','model_strings'], axis=1)
+
+#For testing take2senti file
+#rawsentiment1 = pd.read_csv(r'C:\Users\beins_000\Documents\GitHub\Text_Mining_MIS184N\Group_Assignment_3\take2senti.csv')
 #rawsentiment = rawsentiment1.drop('Unnamed: 0', axis=1) #Testing bejans
+
 lab_for_C = ['ES', 'LS', 'RX', 'A8', 'A6', '3series', '5series', '7series', 'XJ', 'Sclass']
 rawsentiment.columns = lab_for_C
 rawsentiment = rawsentiment * 5
-rawsentiment.replace(to_replace=0,value=0.0001, inplace=True)
 
 #----------End Part C--------
 
@@ -82,12 +85,12 @@ for i, value in enumerate(names):
 node_list = []
 for index, pref in enumerate(averages_df.loc[:,'Positive']): #Positives
     if ~np.isnan(pref):
-        node_list.append((pd.Series(averages_df.loc[:,'Node 1'])[index],pd.Series(averages_df.loc[:,'Node 2'])[index]))
-        G.add_edge(*(opp_labels[pd.Series(averages_df.loc[:,'Node 1'])[index]],opp_labels[pd.Series(averages_df.loc[:,'Node 2'])[index]]))
-for index, pref in enumerate(averages_df.loc[:,'Negative']): #Negatives
-    if ~np.isnan(pref):
         node_list.append((pd.Series(averages_df.loc[:,'Node 2'])[index],pd.Series(averages_df.loc[:,'Node 1'])[index]))
         G.add_edge(*(opp_labels[pd.Series(averages_df.loc[:,'Node 2'])[index]],opp_labels[pd.Series(averages_df.loc[:,'Node 1'])[index]]))
+for index, pref in enumerate(averages_df.loc[:,'Negative']): #Negatives
+    if ~np.isnan(pref):
+        node_list.append((pd.Series(averages_df.loc[:,'Node 1'])[index],pd.Series(averages_df.loc[:,'Node 2'])[index]))
+        G.add_edge(*(opp_labels[pd.Series(averages_df.loc[:,'Node 1'])[index]],opp_labels[pd.Series(averages_df.loc[:,'Node 2'])[index]]))
 
 
 pos = nx.circular_layout(G) #Positions
@@ -109,48 +112,78 @@ fig1.savefig('network.png', dpi=1000)
 
 ##Part B
 
-#Unweighted Page Rank
-unweighted_PR = nx.pagerank(G, alpha = 0.5, max_iter=100)
+##Unweighted Page Rank
+#unweighted_PR = nx.pagerank(G, alpha = 0.5, max_iter=100)
+#
+##Weighted Page Rank
+###Creating the network graph
+#FG=nx.Graph()
+#
+##Creating the labels for the nodes and adding a node to the G object
+#labels = {}
+#opp_labels = {}
+#for i, value in enumerate(names):
+#    labels[i] = str(value)
+#    opp_labels[value] = i
+#    FG.add_node(value) #Adding the nodes
+##Create the list of tuples for edges with weights this time
+#node_list = []
+#for index, pref in enumerate(averages_df.loc[:,'Positive']): #Positives
+#    if ~np.isnan(pref):
+#        node_list.append((pd.Series(averages_df.loc[:,'Node 2'])[index],pd.Series(averages_df.loc[:,'Node 1'])[index],pref))
+#    else:
+#        node_list.append((pd.Series(averages_df.loc[:,'Node 2'])[index],pd.Series(averages_df.loc[:,'Node 1'])[index],0))
+#
+#FG.add_weighted_edges_from(node_list)
+#
+#
+#for index, pref in enumerate(averages_df.loc[:,'Negative']): #Negatives
+#    if ~np.isnan(pref):
+#        node_list.append((pd.Series(averages_df.loc[:,'Node 1'])[index],pd.Series(averages_df.loc[:,'Node 2'])[index],abs(pref)))
+#    else:
+#        node_list.append((pd.Series(averages_df.loc[:,'Node 1'])[index],pd.Series(averages_df.loc[:,'Node 2'])[index],0))
+#
+#FG.add_weighted_edges_from(node_list)
+#
+#
+#weighted_PR = nx.pagerank(FG, alpha = 0.5, weight = 'weight')#, max_iter=100000, tol=1e-01)
+#
+#
+##Placing the PageRank in a series for combination and Correlation Calculation
+#i=0
+#unweighted_PageRank = pd.Series(name='Unweighted')
+#for dictkey in unweighted_PR:
+#    unweighted_PageRank[labels[i]] = unweighted_PR[dictkey]
+#    i = i + 1
+#
+#weighted_PageRank = pd.Series(name='Weighted')
+#for dictkey in weighted_PR:
+#    weighted_PageRank[dictkey] = weighted_PR[dictkey]
+#    
+##Create a dict of price data
+#price_dict = {'A6':20000, 'A8':12000, '3series':220000, '5series':60000, '7series':14000, 'XJ':6600, 'ES':135000, 'LS':30000, 'RX':120000, 'Sclass':25000}
+#
+#
+#price_list = pd.Series(name='Price')
+#for dictkey in price_dict:
+#    price_list[dictkey] = price_dict[dictkey]
+#
+#price_pagerank = pd.concat([unweighted_PageRank, weighted_PageRank, price_list], axis=1)
+#
+##np.correlate(price_pagerank['Unweighted'], price_pagerank['Price'])
+#
+#print('Unweighted Correlation to Price')
+#print(scipy.stats.spearmanr(price_pagerank['Unweighted'], price_pagerank['Price']))
+#print('Weighted Correlation to Price')
+#print(scipy.stats.spearmanr(price_pagerank['Weighted'], price_pagerank['Price']))
 
-#Weighted Page Rank
-##Creating the network graph
-FG=nx.Graph()
-
-#Creating the labels for the nodes and adding a node to the G object
-labels = {}
-opp_labels = {}
-for i, value in enumerate(names):
-    labels[i] = str(value)
-    opp_labels[value] = i
-    FG.add_node(value) #Adding the nodes
-#Create the list of tuples for edges with weights this time
-node_list = []
-for index, pref in enumerate(averages_df.loc[:,'Positive']): #Positives
-    if ~np.isnan(pref):
-        node_list.append((pd.Series(averages_df.loc[:,'Node 1'])[index],pd.Series(averages_df.loc[:,'Node 2'])[index],pref))
-FG.add_weighted_edges_from(node_list)
 
 
-for index, pref in enumerate(averages_df.loc[:,'Negative']): #Negatives
-    if ~np.isnan(pref):
-        node_list.append((pd.Series(averages_df.loc[:,'Node 2'])[index],pd.Series(averages_df.loc[:,'Node 1'])[index],abs(pref)))
-FG.add_weighted_edges_from(node_list)
 
+##Coding pagerank ------- Weighted
 
-weighted_PR = nx.pagerank(FG, alpha = 0.5, weight = 'weight')#, max_iter=100000, tol=1e-01)
-
-
-#Placing the PageRank in a series for combination and Correlation Calculation
-i=0
-unweighted_PageRank = pd.Series(name='Unweighted')
-for dictkey in unweighted_PR:
-    unweighted_PageRank[labels[i]] = unweighted_PR[dictkey]
-    i = i + 1
-
-weighted_PageRank = pd.Series(name='Weighted')
-for dictkey in weighted_PR:
-    weighted_PageRank[dictkey] = weighted_PR[dictkey]
-    
+#Counting the number of outputs for each node
+counts_dict = {}
 #Create a dict of price data
 price_dict = {'A6':20000, 'A8':12000, '3series':220000, '5series':60000, '7series':14000, 'XJ':6600, 'ES':135000, 'LS':30000, 'RX':120000, 'Sclass':25000}
 
@@ -159,13 +192,136 @@ price_list = pd.Series(name='Price')
 for dictkey in price_dict:
     price_list[dictkey] = price_dict[dictkey]
 
-price_pagerank = pd.concat([unweighted_PageRank, weighted_PageRank, price_list], axis=1)
+for index, value in enumerate(averages_df.ix[:,'Negative']):
+    if np.isnan(value):
+        continue
+    else:
+        if averages_df.ix[index,'Node 1'] in counts_dict:
+            counts_dict[averages_df.ix[index,'Node 1']] += 1
+        else:
+            counts_dict[averages_df.ix[index,'Node 1']] = 1
 
-#np.correlate(price_pagerank['Unweighted'], price_pagerank['Price'])
 
-print('Unweighted Correlation to Price')
-print(scipy.stats.spearmanr(price_pagerank['Unweighted'], price_pagerank['Price']))
-print('Weighted Correlation to Price')
-print(scipy.stats.spearmanr(price_pagerank['Weighted'], price_pagerank['Price']))
+for index, value in enumerate(averages_df.ix[:,'Positive']):
+    if np.isnan(value):
+        continue
+    else:
+        if averages_df.ix[index,'Node 2'] in counts_dict:
+            counts_dict[averages_df.ix[index,'Node 2']] += 1
+        else:
+            counts_dict[averages_df.ix[index,'Node 2']] = 1
+
+
+#Creating the matrix
+A = pd.DataFrame(index=names, columns=names)
+
+for index, value in enumerate(averages_df.ix[:,'Positive']):
+    if ~np.isnan(value):
+        A.ix[averages_df.ix[index,'Node 1'], averages_df.ix[index,'Node 2']] = value/counts_dict[averages_df.ix[index,'Node 2']]
+for index, value in enumerate(averages_df.ix[:,'Negative']):
+    if ~np.isnan(value):
+        A.ix[averages_df.ix[index,'Node 2'], averages_df.ix[index,'Node 1']] = abs(value)/counts_dict[averages_df.ix[index,'Node 1']]
+
+x = pd.DataFrame([1,1,1,1,1,1,1,1,1,1])
+
+A.fillna(0, inplace=True)
+new_names = list(A.index.values)
+A = np.matrix(A) #Convert to Matrix
+x = np.matrix(x) #Convert to Matrix
+
+
+#Find Eigenvector/PageRank
+iterations = 30
+
+for i in range(iterations):
+    new = A*x
+    new = new/np.linalg.norm(new)
+    if np.array_equal(np.array(x),np.array(new)):
+        print 'Convergence after ', i
+        break
+    x = new
+
+#print x
+#print new
+
+newseries = pd.DataFrame(new, index=new_names)
+
+#Assign a index name to the pagerank
+final = pd.concat([newseries,price_list], axis=1)
+final.columns = ['PageRank','Price'] 
+print('Weighted Correlation')
+print(scipy.stats.spearmanr(final['PageRank'], final['Price']))
+
+
+
+##Coding pagerank ----- Unweighted
+
+#Counting the number of outputs for each node
+counts_dict = {}
+
+for index, value in enumerate(averages_df.ix[:,'Negative']):
+    if np.isnan(value):
+        continue
+    else:
+        if averages_df.ix[index,'Node 1'] in counts_dict:
+            counts_dict[averages_df.ix[index,'Node 1']] += 1
+        else:
+            counts_dict[averages_df.ix[index,'Node 1']] = 1
+
+
+for index, value in enumerate(averages_df.ix[:,'Positive']):
+    if np.isnan(value):
+        continue
+    else:
+        if averages_df.ix[index,'Node 2'] in counts_dict:
+            counts_dict[averages_df.ix[index,'Node 2']] += 1
+        else:
+            counts_dict[averages_df.ix[index,'Node 2']] = 1
+
+
+#Creating the matrix
+A = pd.DataFrame(index=names, columns=names)
+
+for index, value in enumerate(averages_df.ix[:,'Positive']):
+    if ~np.isnan(value):
+        A.ix[averages_df.ix[index,'Node 1'], averages_df.ix[index,'Node 2']] = 1.0/counts_dict[averages_df.ix[index,'Node 2']]
+for index, value in enumerate(averages_df.ix[:,'Negative']):
+    if ~np.isnan(value):
+        A.ix[averages_df.ix[index,'Node 2'], averages_df.ix[index,'Node 1']] = 1.0/counts_dict[averages_df.ix[index,'Node 1']]
+
+x = pd.DataFrame([1,1,1,1,1,1,1,1,1,1])
+
+A.fillna(0, inplace=True)
+new_names = list(A.index.values)
+A = np.matrix(A) #Convert to Matrix
+x = np.matrix(x) #Convert to Matrix
+
+
+#Find Eigenvector/PageRank
+iterations = 30
+
+for i in range(iterations):
+    new = A*x
+    new = new/np.linalg.norm(new)
+    if np.array_equal(np.array(x),np.array(new)):
+        print 'Convergence after ', i
+        break
+    x = new
+
+
+
+newseries = pd.DataFrame(new, index=new_names)
+
+#Assign a index name to the pagerank
+final = pd.concat([final, newseries], axis=1)
+final.columns = ['Weighted PageRank','Price','Unweighted PageRank']
+print('Unwighted Correlation')
+print(scipy.stats.spearmanr(final['Unweighted PageRank'], final['Price']))
+print final
+
+
+
+
+
 
 
