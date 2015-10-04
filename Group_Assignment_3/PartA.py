@@ -228,9 +228,9 @@ newseries = pd.DataFrame(new, index=new_names)
 
 #Assign a index name to the pagerank
 final = pd.concat([newseries,price_list], axis=1)
-final.columns = ['PageRank','Price'] 
+final.columns = ['PageRank','Sales'] 
 print('Weighted Correlation')
-print(scipy.stats.spearmanr(final['PageRank'], final['Price']))
+print(scipy.stats.spearmanr(final['PageRank'], final['Sales']))
 #print(scipy.stats.pearsonr(final['PageRank'], final['Price']))
 
 
@@ -294,9 +294,9 @@ newseries = pd.DataFrame(new, index=new_names)
 
 #Assign a index name to the pagerank
 final = pd.concat([final, newseries], axis=1)
-final.columns = ['Weighted PageRank','Price','Unweighted PageRank']
+final.columns = ['Weighted PageRank','Sales','Unweighted PageRank']
 print('Unwighted Correlation')
-print(scipy.stats.spearmanr(final['Unweighted PageRank'], final['Price']))
+print(scipy.stats.spearmanr(final['Unweighted PageRank'], final['Sales']))
 print final
 
 
