@@ -20,10 +20,12 @@ from textblob.tokenizers import WordTokenizer
 from numpy import isnan
 from nltk.corpus import stopwords
 
-rawsentiment = pd.read_csv(r'C:\Users\beins_000\Documents\GitHub\Text_Mining_MIS184N\Group_Assignment_3\Assignment 3 Sentiment Scores (2).csv')
+rawsentiment = pd.read_csv(r'Assignment 3 Sentiment Scores (2).csv')
 
 
-
+########
+#Part A#
+########
 
 #names = ['ES-LS','ES-RX','ES-A8','ES-A6','ES-3series','ES-5series','ES-7series','ES-XJ','ES-Sclass','LS-RX','LS-A8','LS-A6','LS-3series','LS-5series','LS-7series','LS-XJ','LS-Sclass','RX-A8','RX-A6','RX-3series','RX-5series','RX-7series','RX-XJ','RX-Sclass','A8-A6','A8-3series','A8-5series','A8-7series','A8-XJ','A8-Sclass','A6-3series','A6-5series','A6-7series','A6-XJ','A6-Sclass','3series-5series','3series-7series','3series-XJ','3series-Sclass','5series-7series','5series-XJ','5series-Sclass','7series-XJ','7series-Sclass','XJ-Sclass']
 names = list(rawsentiment.columns)
@@ -106,7 +108,10 @@ plt.show()
 fig1.savefig('network.png', dpi=1000)
 
 
-##Part B
+########
+#Part B#
+########
+
 ##Coding pagerank ------- Weighted
 
 
@@ -303,7 +308,10 @@ print final
 
 
 
-#----------For Part C--------
+########
+#Part C#
+########
+
 
 data=pd.read_csv("Assignment 3 Edmunds Posts.csv", usecols=[0])
 
@@ -450,7 +458,6 @@ plt.show()
 fig1.savefig('network.png', dpi=1000)
 
 
-##Part B
 ##Coding pagerank ------- Weighted
 
 
